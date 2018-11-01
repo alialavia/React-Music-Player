@@ -31,39 +31,6 @@ Notes:
 - Launch localhost:3000 in the browser to view the result.
 */
 
-const BottomContainer = styled.div`
-  width: 100%;
-  background-color: #444444;
-  position: fixed;
-  bottom: 0;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  height: 148px;
-`;
-
-const TrackInfo = styled.div`
-  width: 256px;
-  height: 100%;
-  display: flex
-  order: 1;  
-`;
-
-const Img = styled.img`
-  width: 128px;
-  height: 128px;
-`;
-const ArtistName = styled.span`
-  margin: 10px;
-  color: #dddddd;
-`;
-
-const ControlContainer = styled.div`
-  flex: 1;
-  order: 2;
-  display: flex;
-  justify-content: center;
-`;
 
 class Player extends React.Component {
   constructor(props) {
@@ -176,5 +143,40 @@ function Button(props) {
   let color = props.disabled ? "#222222" : "#888888";
   return <Span style={{ color }} {...props} />;
 }
+
+const BottomContainer = styled.div`
+  width: 100%;
+  background-color: #444444;
+  position: fixed;
+  bottom: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  height: 148px;
+`;
+
+const TrackInfo = styled.div`
+  width: 256px;
+  height: 100%;
+  display: flex
+  order: 1;  
+`;
+
+const Img = styled.img`
+  width: 128px;
+  height: 128px;
+`;
+const ArtistName = styled.span`
+  margin: 10px;
+  color: #dddddd;
+`;
+
+const ControlContainer = styled.div`
+  flex: 1;
+  order: 2;
+  display: flex;
+  justify-content: center;
+`;
+
 
 export default Player;
