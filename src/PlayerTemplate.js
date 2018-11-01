@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
 import { tracks } from "./playlist.js";
 import classNames from "classnames";
+import styled from "styled-components";
 
 /*
 The goal is to create an audio player, similar to what you'd find at the bottom of the Spotify app.
@@ -29,6 +30,41 @@ Notes:
 - Prioritize a clean implementation.
 - Launch localhost:3000 in the browser to view the result.
 */
+
+const BottomContainer = styled.div`
+  width: 100%;
+  background-color: #444444;
+  position: fixed;
+  bottom: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  height: 148px;
+`;
+
+const TrackInfo = styled.div`
+  width: 256px;
+  height: 100%;
+  display: flex
+  order: 1;  
+`;
+
+const Img = styled.img`
+  width: 128px;
+  height: 128px;
+`;
+const ArtistName = styled.span`
+  margin: 10px;
+  color: #dddddd;
+`;
+
+const ControlContainer = styled.div`
+  flex: 1;
+  order: 2;
+  display: flex;
+  justify-content: center;
+`;
+
 class Player extends React.Component {
   constructor(props) {
     super(props);
@@ -54,15 +90,13 @@ class Player extends React.Component {
 
   render() {
     return (
-      <div>
-        <MediaPlayer
-          track={this.tracks[this.state.trackIndex]}
-          onPrev={this.prevHandler}
-          onNext={this.nextHandler}
-          canPrev={this.state.trackIndex > 0}
-          canNext={this.state.trackIndex < this.tracks.length - 1}
-        />
-      </div>
+      <MediaPlayer
+        track={this.tracks[this.state.trackIndex]}
+        onPrev={this.prevHandler}
+        onNext={this.nextHandler}
+        canPrev={this.state.trackIndex > 0}
+        canNext={this.state.trackIndex < this.tracks.length - 1}
+      />
     );
   }
 }
@@ -80,25 +114,33 @@ class MediaPlayer extends React.Component {
       return { playing: !prevState.playing };
     });
   }
+
   render() {
     return (
-      <div>
-        <img src={this.props.track.artworkUrl} alt="artwork" />
-        <span id="artistname">{this.props.track.artistName}</span>
-        <span
-          disabled={!this.props.canPrev}
-          className="fa fa-fast-backward"
-          onClick={this.props.onPrev}
-        />        
-        <span onClick={this.togglePlay} className={classNames("fas", {
-            "fa-pause": this.state.playing,
-            "fa-play": !this.state.playing
-          })}/>        
-        <span
-          disabled={!this.props.canNext}
-          className="fa fa-fast-forward"
-          onClick={this.props.onNext}
-        />
+      <BottomContainer>
+        <TrackInfo>
+          <Img src={this.props.track.artworkUrl} alt="artwork" />
+          <ArtistName>{this.props.track.artistName}</ArtistName>
+        </TrackInfo>
+        <ControlContainer>
+          <Button
+            disabled={!this.props.canPrev}
+            className="fas fa-fast-backward"
+            onClick={this.props.onPrev}
+          />
+          <Button
+            onClick={this.togglePlay}
+            className={classNames("fas", "zoom", {
+              "fa-pause": this.state.playing,
+              "fa-play": !this.state.playing
+            })}
+          />
+          <Button
+            disabled={!this.props.canNext}
+            className="fas fa-fast-forward"
+            onClick={this.props.onNext}
+          />
+        </ControlContainer>
         <ReactPlayer
           playing={this.state.playing}
           url={this.props.track.mediaUrl}
@@ -106,7 +148,7 @@ class MediaPlayer extends React.Component {
           width={"0px"}
           config={{ file: { forceAudio: true } }}
         />
-      </div>
+      </BottomContainer>
     );
   }
 }
@@ -125,5 +167,14 @@ MediaPlayer.propTypes = {
   onNext: PropTypes.func.isRequired,
   onPrev: PropTypes.func.isRequired
 };
+
+function Button(props) {
+  const Span = styled.span`
+    padding: 20px;
+    font-size: x-large;
+  `;
+  let color = props.disabled ? "#222222" : "#888888";
+  return <Span style={{ color }} {...props} />;
+}
 
 export default Player;
