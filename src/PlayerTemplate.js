@@ -1,10 +1,10 @@
 import React from "react";
-import { render } from "react-dom";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
 import { tracks } from "./playlist.js";
 import classNames from "classnames";
 import styled from "styled-components";
+import Seeker from "./Seeker.js";
 
 /*
 The goal is to create an audio player, similar to what you'd find at the bottom of the Spotify app.
@@ -30,7 +30,6 @@ Notes:
 - Prioritize a clean implementation.
 - Launch localhost:3000 in the browser to view the result.
 */
-
 
 class Player extends React.Component {
   constructor(props) {
@@ -85,29 +84,37 @@ class MediaPlayer extends React.Component {
   render() {
     return (
       <BottomContainer>
-        <TrackInfo>
-          <Img src={this.props.track.artworkUrl} alt="artwork" />
+        <TrackInfo style={{order:1}}>
+          <ArtWork src={this.props.track.artworkUrl} alt="artwork" />
           <ArtistName>{this.props.track.artistName}</ArtistName>
         </TrackInfo>
-        <ControlContainer>
-          <Button
-            disabled={!this.props.canPrev}
-            className="fas fa-fast-backward"
-            onClick={this.props.onPrev}
-          />
-          <Button
-            onClick={this.togglePlay}
-            className={classNames("fas", "zoom", {
-              "fa-pause": this.state.playing,
-              "fa-play": !this.state.playing
-            })}
-          />
-          <Button
-            disabled={!this.props.canNext}
-            className="fas fa-fast-forward"
-            onClick={this.props.onNext}
-          />
-        </ControlContainer>
+        <TrackInfo style={{order:3}}></TrackInfo>
+
+          <ControlContainer>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+              <Button
+                disabled={!this.props.canPrev}
+                className="fas fa-fast-backward"
+                onClick={this.props.onPrev}
+              />
+              <Button
+                onClick={this.togglePlay}
+                className={classNames("fas", "zoom", {
+                  "fa-pause": this.state.playing,
+                  "fa-play": !this.state.playing
+                })}
+              />
+              <Button
+                disabled={!this.props.canNext}
+                className="fas fa-fast-forward"
+                onClick={this.props.onNext}
+              />
+            </div>
+            <div style={{height: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <Seeker/>
+            </div>
+          </ControlContainer>
+
         <ReactPlayer
           playing={this.state.playing}
           url={this.props.track.mediaUrl}
@@ -141,7 +148,7 @@ function Button(props) {
     font-size: x-large;
   `;
   let color = props.disabled ? "#222222" : "#888888";
-  return <Span style={{ color }} {...props} />;
+  return <Span style={{ color, height: "50%" }} {...props} />;
 }
 
 const BottomContainer = styled.div`
@@ -159,10 +166,9 @@ const TrackInfo = styled.div`
   width: 256px;
   height: 100%;
   display: flex
-  order: 1;  
 `;
 
-const Img = styled.img`
+const ArtWork = styled.img`
   width: 128px;
   height: 128px;
 `;
@@ -173,10 +179,9 @@ const ArtistName = styled.span`
 
 const ControlContainer = styled.div`
   flex: 1;
-  order: 2;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  order: 2;
 `;
-
 
 export default Player;
