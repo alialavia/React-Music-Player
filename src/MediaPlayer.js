@@ -77,7 +77,7 @@ export default class MediaPlayer extends React.Component {
 					{/* Buttons */}
 					<div className="control-panel" style={{width: '80%'}} >
 						<div className={classNames("artist-info")}>
-								<InfoText>{this.props.track.artistName}</InfoText>
+								<InfoText style={{marginLeft: 0}}>{this.props.track.artistName}</InfoText>
 						</div>
 						<div className={classNames("h-center")}>
 							<Button
@@ -99,7 +99,7 @@ export default class MediaPlayer extends React.Component {
 							/>
 						</div>
 						<div className="time-display">
-							<InfoText>
+							<InfoText style={{marginRight: 0}}>
 								{formatSeconds(this.state.playedSeconds)}
 							</InfoText>
 						</div>
@@ -173,4 +173,5 @@ const InfoText = styled.div`
   	text-overflow: ellipsis;
   	color: #888888;
   	max-width: 122px;
+  	margin: auto
 `;
