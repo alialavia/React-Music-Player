@@ -5,7 +5,8 @@ import { tracks } from "./playlist.js";
 import classNames from "classnames";
 import styled from "styled-components";
 import Seeker from "./Seeker.js";
-
+import { Container, Row, Col } from "react-grid-system";
+import { formatSeconds } from './Helpers.js';
 /*
 The goal is to create an audio player, similar to what you'd find at the bottom of the Spotify app.
 All our media files are accessible via URLs, as you can see below in `this.tracks`. We're using a
@@ -70,9 +71,13 @@ class Player extends React.Component {
 class MediaPlayer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { playing: false, playedSeconds: 0, played: 0 };
+
     this.togglePlay = this.togglePlay.bind(this);
-    this.state = { playing: false };
     this.btnClass = { true: "fa-play", false: "fa-pause" };
+    this.progressHandler = this.progressHandler.bind(this);
+    this.ref = this.ref.bind(this);
+    this.seekHandler = this.seekHandler.bind(this);
   }
 
   togglePlay() {
@@ -81,17 +86,66 @@ class MediaPlayer extends React.Component {
     });
   }
 
+  progressHandler(e) {
+    this.setState(prevState => {
+      return { playedSeconds: Math.round(e.playedSeconds), played: e.played };
+    }); 
+  }
+
+  ref(player) {
+    this.player = player;
+  }
+
+  seekHandler(value) {
+    this.player.seekTo(value);
+    console.log(value);
+  }
+
   render() {
     return (
-      <BottomContainer>
-        <TrackInfo style={{order:1}}>
-          <ArtWork src={this.props.track.artworkUrl} alt="artwork" />
-          <ArtistName>{this.props.track.artistName}</ArtistName>
-        </TrackInfo>
-        <TrackInfo style={{order:3}}></TrackInfo>
-
-          <ControlContainer>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+      <Container>
+        {/* Main row */}
+        <Row style={{ backgroundColor: "#444444" }}>
+          {/* Artist Info */}
+          <Col sm={12} md={3} style={{ backgroundColor: "#444444", padding: 10 }}>
+            <Row>
+              <Col
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center"
+                }}
+                sm={12}
+                md={6}
+              >
+                <ArtWork src={this.props.track.artworkUrl} alt="artwork" />
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: 'center'
+                }}
+                sm={12}
+                md={6}
+              >              
+                <ArtistName>
+                {this.props.track.artistName}
+                </ArtistName>
+              </Col>
+            </Row>
+          </Col>
+          {/* Controls */}
+          <Col>
+            {/* Buttons */}
+            <Row
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center"
+              }}
+            >
               <Button
                 disabled={!this.props.canPrev}
                 className="fas fa-fast-backward"
@@ -109,20 +163,55 @@ class MediaPlayer extends React.Component {
                 className="fas fa-fast-forward"
                 onClick={this.props.onNext}
               />
-            </div>
-            <div style={{height: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <Seeker/>
-            </div>
-          </ControlContainer>
+            </Row>
+            {/* Seeker */}
+            <Row
+              style={{
+                flexGrow: 1,
+                display: "flex",
+                padding: 20,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "space-between"
+              }}
+            >
+              <Col
+                style={{
+                  display: "flex",
+                  padding: 5,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Seeker onChange={this.seekHandler} time={this.state.played*100}/>
+              </Col>
+            </Row>
+          </Col>
 
+          <Col sm={12} md={3} style={{
+                  display: "flex",
+                  padding: 5,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: '#dddddd'
+                }}>
+                {formatSeconds(this.state.playedSeconds)}
+          </Col>
+        </Row>
+        {/* Invisible player component */}
         <ReactPlayer
+          ref={this.ref}
           playing={this.state.playing}
           url={this.props.track.mediaUrl}
-          height={"0px"}
-          width={"0px"}
+          height={0}
+          width={0}
           config={{ file: { forceAudio: true } }}
+          progressInterval={1000}
+          onProgress={this.progressHandler}          
         />
-      </BottomContainer>
+      </Container>
     );
   }
 }
@@ -151,37 +240,14 @@ function Button(props) {
   return <Span style={{ color, height: "50%" }} {...props} />;
 }
 
-const BottomContainer = styled.div`
-  width: 100%;
-  background-color: #444444;
-  position: fixed;
-  bottom: 0;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  height: 148px;
-`;
-
-const TrackInfo = styled.div`
-  width: 256px;
-  height: 100%;
-  display: flex
-`;
-
 const ArtWork = styled.img`
-  width: 128px;
-  height: 128px;
-`;
-const ArtistName = styled.span`
-  margin: 10px;
-  color: #dddddd;
+  width: 100%;
+  height: 100%;
 `;
 
-const ControlContainer = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  order: 2;
+const ArtistName = styled.span`
+  margin: 10px;  
+  color: #dddddd;
 `;
 
 export default Player;
