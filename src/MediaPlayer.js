@@ -10,7 +10,6 @@ import React from "react";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
 
-import { Container, Row, Col, Hidden } from "react-grid-system";
 import classNames from "classnames";
 import styled from "styled-components";
 import "./Layout.css";

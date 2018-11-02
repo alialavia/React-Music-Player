@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import React, { Component } from "react";
+import React from "react";
 
 function Seeker(props) {
     const { time, ...passThrough } = props;

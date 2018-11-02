@@ -1,7 +1,6 @@
 import React from "react";
 import { tracks } from "./playlist.js";
 import MediaPlayer from "./MediaPlayer.js";
-import styled from "styled-components";
 import "./Layout.css";
 /*
 The goal is to create an audio player, similar to what you'd find at the bottom of the Spotify app.
