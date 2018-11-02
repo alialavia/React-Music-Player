@@ -1,6 +1,8 @@
 import React from "react";
 import { tracks } from "./playlist.js";
 import MediaPlayer from "./MediaPlayer.js";
+import styled from "styled-components";
+import "./Layout.css";
 /*
 The goal is to create an audio player, similar to what you'd find at the bottom of the Spotify app.
 All our media files are accessible via URLs, as you can see below in `this.tracks`. We're using a
@@ -57,12 +59,15 @@ class Player extends React.Component {
         onNext={this.nextHandler}
         canPrev={this.state.trackIndex > 0}
         canNext={this.state.trackIndex < this.tracks.length - 1}
-      />
+      />      
     );
   }
 }
 
+const ArtWork = styled.img`
 
+  object-fit: contain;
+`;
 
 
 export default Player;

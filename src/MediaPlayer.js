@@ -10,10 +10,10 @@ import React from "react";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
 
-import { Container, Row, Col } from "react-grid-system";
+import { Container, Row, Col, Hidden } from "react-grid-system";
 import classNames from "classnames";
 import styled from "styled-components";
-import "./MediaPlayer.css";
+import "./Layout.css";
 import Seeker from "./Seeker.js";
 
 import { formatSeconds } from "./Helpers.js";
@@ -28,6 +28,7 @@ export default class MediaPlayer extends React.Component {
 		this.progressHandler = this.progressHandler.bind(this);
 		this.ref = this.ref.bind(this);
 		this.seekHandler = this.seekHandler.bind(this);
+		this.endedHandler = this.endedHandler.bind(this);
 	}
 
 	togglePlay() {
@@ -53,36 +54,34 @@ export default class MediaPlayer extends React.Component {
 		this.player.seekTo(value);
 	}
 
+	endedHandler() {
+		this.setState({playing: false });
+	}
+
+
 	render() {
 		return (
-			<Container fluid>
-				{/* Main row */}
-				<Row style={{ backgroundColor: "#444444" }}>
-					{/* Artist Info */}
-					<Col sm={12} md={3} style={{ padding: 10 }}>
-						<Row>
-							<Col className="h-center" sm={12} md={6}>
-								<ArtWork
-									src={this.props.track.artworkUrl}
-									alt="artwork"
-								/>
-							</Col>
-							<Col
-								className="h-center"
-								style={{ alignItems: "center" }}
-								sm={12}
-								md={6}
-							>
-								<InfoText>
-									{this.props.track.artistName}
-								</InfoText>
-							</Col>
-						</Row>
-					</Col>
-					{/* Controls */}
-					<Col>
-						{/* Buttons */}
-						<div className="h-center">
+			<div
+				className="v-spread"
+				style={{ backgroundColor: "black", height: "100%" }}
+			>
+				<div
+					className="v-spread"
+					style={{
+						textAlign: "center",
+						alignItems: "stretch",
+						flex: 1
+					}}
+				>
+					<ArtWork src={this.props.track.artworkUrl} alt="artwork" />
+				</div>
+				<div className="v-spread" style={{padding: 10}}>
+					{/* Buttons */}
+					<div style={{width: '100%', alignItems: 'center', display: 'flex', flexDirection: 'row'}}>
+						<InfoText className="col-3">
+							{formatSeconds(this.state.playedSeconds)}
+						</InfoText>
+						<div className={classNames("h-center", "col-6")}>
 							<Button
 								disabled={!this.props.canPrev}
 								className="fas fa-fast-backward"
@@ -101,50 +100,34 @@ export default class MediaPlayer extends React.Component {
 								onClick={this.props.onNext}
 							/>
 						</div>
-						{/* Seeker */}
-						<div
-							className="h-center"
-							style={{
-								flexGrow: 1,
-								padding: 20
-							}}
-						>
-							<Col
-								className="h-center"
-								style={{
-									padding: 5
-								}}
-							>
-								<Seeker
-									onChange={this.seekHandler}
-									time={this.state.played * 100}
-								/>
-							</Col>
-						</div>
-					</Col>
-
-					<Col
-						className="hv-center"
-						sm={12}
-						md={3}
-					>
-						<InfoText>
-							{formatSeconds(this.state.playedSeconds)}
+						<InfoText className="col-3">
+							{this.props.track.artistName}
 						</InfoText>
-					</Col>
-				</Row>
-				{/* Invisible player component */}
-				<ReactPlayer
-					ref={this.ref}
-					playing={this.state.playing}
-					url={this.props.track.mediaUrl}
-					height={0}
-					width={0}
-					config={{ file: { forceAudio: true } }}
-					progressInterval={1000}
-					onProgress={this.progressHandler}
-				/>
-			</Container>
+					</div>
+					<div
+						className="hv-center"
+						style={{
+							height: "50px"
+						}}
+					>
+						<Seeker
+							onChange={this.seekHandler}
+							time={this.state.played * 100}
+						/>
+					</div>
+					<ReactPlayer
+						ref={this.ref}
+						playing={this.state.playing}
+						url={this.props.track.mediaUrl}
+						height={0}
+						width={0}
+						config={{ file: { forceAudio: true } }}
+						progressInterval={1000}
+						onProgress={this.progressHandler}
+						onEnded={this.endedHandler}
+					/>
+				</div>
+			</div>
 		);
 	}
 }
@@ -175,11 +158,13 @@ function Button(props) {
 }
 
 const ArtWork = styled.img`
-	width: 100%;
-	height: 100%;
+	object-fit: contain;
+	margin: "10px";
+	flex-grow: 1;
 `;
 
 const InfoText = styled.span`
-	padding: 20px;
+	padding: 10px;
 	color: #dddddd;
+	text-align: center;
 `;
