@@ -64,10 +64,4 @@ class Player extends React.Component {
   }
 }
 
-const ArtWork = styled.img`
-
-  object-fit: contain;
-`;
-
-
 export default Player;

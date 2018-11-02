@@ -55,9 +55,8 @@ export default class MediaPlayer extends React.Component {
 	}
 
 	endedHandler() {
-		this.setState({playing: false });
+		this.setState({ playing: false });
 	}
-
 
 	render() {
 		return (
@@ -75,13 +74,13 @@ export default class MediaPlayer extends React.Component {
 				>
 					<ArtWork src={this.props.track.artworkUrl} alt="artwork" />
 				</div>
-				<div className="v-spread" style={{padding: 10}}>
+				<div className="v-spread">
 					{/* Buttons */}
-					<div style={{width: '100%', alignItems: 'center', display: 'flex', flexDirection: 'row'}}>
-						<InfoText className="col-3">
-							{formatSeconds(this.state.playedSeconds)}
-						</InfoText>
-						<div className={classNames("h-center", "col-6")}>
+					<div className="control-panel" style={{width: '80%'}} >
+						<div className={classNames("artist-info")}>
+								<InfoText>{this.props.track.artistName}</InfoText>
+						</div>
+						<div className={classNames("h-center")}>
 							<Button
 								disabled={!this.props.canPrev}
 								className="fas fa-fast-backward"
@@ -100,14 +99,18 @@ export default class MediaPlayer extends React.Component {
 								onClick={this.props.onNext}
 							/>
 						</div>
-						<InfoText className="col-3">
-							{this.props.track.artistName}
-						</InfoText>
+						<div className="time-display">
+							<InfoText>
+								{formatSeconds(this.state.playedSeconds)}
+							</InfoText>
+						</div>
 					</div>
 					<div
-						className="hv-center"
+						className="hv-center"						
 						style={{
-							height: "50px"
+							height: "50px",
+							width: '80%',
+							position: 'relative'
 						}}
 					>
 						<Seeker
@@ -159,12 +162,16 @@ function Button(props) {
 
 const ArtWork = styled.img`
 	object-fit: contain;
-	margin: "10px";
 	flex-grow: 1;
+	max-height: 100%;
+    max-width: 100%;
 `;
 
-const InfoText = styled.span`
+const InfoText = styled.div`
 	padding: 10px;
-	color: #dddddd;
-	text-align: center;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	color: #888888;
+  	max-width: 122px;
 `;
