@@ -30,35 +30,68 @@ Notes:
 class Player extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { trackIndex: 0 };
+    this.state = { trackIndex: 0, playing: true, playedSeconds: 0, played: 0 };
     this.tracks = tracks;
-    this.prevHandler = this.prevHandler.bind(this);
-    this.nextHandler = this.nextHandler.bind(this);
   }
 
-  prevHandler() {
+  prevHandler = () => {
     this.setState(prevState => {
       return { trackIndex: Math.max(prevState.trackIndex - 1, 0) };
     });
-  }
+  };
 
-  nextHandler() {
+  nextHandler = () => {
     this.setState(prevState => {
       return {
         trackIndex: Math.min(prevState.trackIndex + 1, this.tracks.length - 1)
       };
     });
-  }
+  };
+
+  playHandler = () => {
+    this.setState(prevState => {
+      return { playing: !prevState.playing };
+    });
+  };
+
+  progressHandler = e => {
+    this.setState(prevState => {
+      return {
+        playedSeconds: Math.round(e.playedSeconds),
+        playedPercent: e.played
+      };
+    });
+  };
+
+  readyHandler = player => {
+    this.player = player;
+  };
+
+  seekHandler = value => {
+    this.player.seekTo(value);
+  };
+
+  endedHandler = () => {
+    this.setState({ playing: false });
+  };
 
   render() {
     return (
       <MediaPlayer
+        isPlaying={this.state.playing}
+        playedSeconds={this.state.playedSeconds}
+        playedPercent={this.state.playedPercent}
         track={this.tracks[this.state.trackIndex]}
         onPrev={this.prevHandler}
         onNext={this.nextHandler}
+        onReady={this.readyHandler}
+        onPlay={this.playHandler}
+        onProgress={this.progressHandler}
+        onEnded={this.endedHandler}
+        onSeek={this.seekHandler}
         canPrev={this.state.trackIndex > 0}
         canNext={this.state.trackIndex < this.tracks.length - 1}
-      />      
+      />
     );
   }
 }
