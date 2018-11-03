@@ -1,0 +1,32 @@
+.seeker-background {
+	height: 5px;
+	background-color: grey;
+}
+
+.seeker-progressbar {
+	background-color: #a4da35;
+	height: 5px;
+}
+
+.button:hover {
+	color: #a4da35;
+}
+
+.button {
+	color: lightgrey;
+	padding: 20px;
+	font-size: x-large;
+
+}
+
+.button-disabled {
+	color: grey;
+}
+
+.button-disabled:hover {
+	color: grey;
+}
+
+.info-text-time, .info-text-artist-name {
+	color: #888888;
+}

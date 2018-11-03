@@ -1,0 +1,72 @@
+.h-center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.h-spread {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.v-spread {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.hv-center {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.control-panel {
+	width: 100%;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+}
+
+.time-display, .artist-info {
+	display: block;
+	width: 20%;
+}
+.time-display {
+	text-align: right;
+}
+
+.artist-info {
+	text-align: left;
+}
+
+.truncate {
+  max-width: 20em;
+}
+
+.seeker {
+	height: 50px;
+	width: 100%;
+}
+
+
+@media only screen and (max-width: 600px) {
+	/* For mobile phones: */
+	.control-panel {
+		flex-direction: column;
+	}
+	.artist-info, .time-display {
+		text-align: center;
+		order: -1;
+		width: 100%;
+	}
+	.truncate {
+		max-width: 10em;
+	}
+}
