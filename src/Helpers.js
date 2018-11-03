@@ -1,3 +1,14 @@
+import PropTypes from "prop-types";
+
+const trackPropType = PropTypes.shape({
+	id: PropTypes.number.isRequired,
+	trackName: PropTypes.string.isRequired,
+	mediaUrl: PropTypes.string.isRequired,
+	artistName: PropTypes.string.isRequired,
+	durationMilliseconds: PropTypes.number.isRequired,
+	artworkUrl: PropTypes.string
+});
+
 function padInt(n, i) {
 	if (n < 0)
 		return '-' + padInt(-n, i);
@@ -17,4 +28,4 @@ function formatSeconds(s) {
 	return `${padInt(minutes, 2)}:${padInt(seconds, 2)}`;
 }
 
-export { padInt, formatSeconds };
+export { padInt, formatSeconds, trackPropType};

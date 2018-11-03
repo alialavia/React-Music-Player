@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import PlayerTemplate from './PlayerTemplate.js';
 import './App.css';
 import styled from "styled-components";
-
+import Player from './components/Player.js';
+import tracks from "./playlist.js";
 class App extends Component {
   render() {
     return (
       <FullHeight>
-        <PlayerTemplate style={{flex: 1}}/>
+        <Player tracks={tracks} style={{ flex: 1 }}/>
       </FullHeight>
     );
   }
@@ -17,6 +17,6 @@ const FullHeight = styled.div`
   height: 100%;
   width: 100%;
   bottom: 0;
-  background-color: green;
+  background-color: black;
   `;
 export default App;
