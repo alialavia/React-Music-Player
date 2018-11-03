@@ -2,11 +2,15 @@
 
 This is a simple music player UI for [react-player](https://www.npmjs.com/package/react-player).
 
+## Styling
+Colors, font-size, ... can be changed in [src/styles/Player.css](src/styles/Player.css).
+You can change the layout in [src/styles/Layout.css](src/styles/Layout.css) if you know what you're doing.
+
 ## Components
-All components, except Player, are functional stateless components.
+All components, except Player, are stateless functional presentational components.
 
 ###[Player](src/components/Player.js)
-Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handels user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods).
+Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods).
 
 ####Props:
 * tracks: A list of well-shaped [tracks](src/playlist.js)
@@ -26,14 +30,22 @@ MediaButtons is a stateless functional presentational component. The events and 
 * onPrevClick: Dispatched if PREV button clicked
 
 ###[Seeker](src/components/Seeker.js)
-Seeker is a stateless functional presentational component. It shows a progressbar that responds to the `percent` prop, and dispatches a onSeekClick event with the corresponding percentage value of the position user clicked on.
+Seeker is a stateless functional presentational component. It shows a progress bar that responds to the `percent` prop, and dispatches a onSeekClick event with the corresponding percentage value of the position user clicked on.
 
 ####Props:
-* percent: A number, between 0.0 and 1.0. The component will show a progressbar corresponding to this number.
+* percent: A number, between 0.0 and 1.0. The component will show a progress bar corresponding to this number.
 * onSeekClick: Dispatched when user clicks on the control. Dispatched with the corresponding percent value as argument.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Dependencies
+* [styled-components](https://github.com/styled-components/styled-components): For in-line styled components
+* [classnames](https://github.com/JedWatson/classnames): For composing multiple class names
+* [prop-types](https://www.npmjs.com/package/prop-types): For type-checking props
+* [react-player](https://www.npmjs.com/package/react-player): For playing media
+
+## Dev dependencies
+* [jsverify](https://github.com/jsverify/jsverify): For painless property-based testing (see [Helpers.test.js](src/Helpers.test.js))
 
 # React docs
 ## Available Scripts
