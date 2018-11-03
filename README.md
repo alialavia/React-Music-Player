@@ -47,6 +47,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Dev dependencies
 * [jsverify](https://github.com/jsverify/jsverify): For painless property-based testing (see [Helpers.test.js](src/Helpers.test.js))
 
+## TODO
+Writing tests for components
+
 # React docs
 ## Available Scripts
 
