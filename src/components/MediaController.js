@@ -45,7 +45,8 @@ export default function MediaController({
 							className="info-text-artist-name"
 							style={{ marginLeft: 0 }}
 						>
-							{track.artistName}
+							{track.artistName}<br/>
+							{track.trackName}
 						</InfoText>
 					</div>
 					<MediaButtons
