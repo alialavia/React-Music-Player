@@ -2,33 +2,27 @@ import * as jsc from "jsverify";
 import { padInt, formatSeconds } from "./Helpers.js";
 
 describe("padInt test suite.", function() {
+	
+	jsc.property("Padding cannot be negative and should throw exception", jsc.uint16, jsc.uint16, (a, b) =>
+		jsc.throws(() => padInt(a, -b - 1))
+	);
+
 	jsc.property(
-		"padInt(-a, +b).length should always be equal to b+1",
+		"For negative numbers, the result's length should be 1 more than the padding, to account for the negative sign",
 		jsc.uint16,
 		jsc.uint16,
 		(a, b) => padInt(-a - 1, b).length === b + 1
 	);
 
 	jsc.property(
-		"padInt(+a, +b) should always be equal to b",
+		"For positive numbers, the result's length should be eqaul to the padding",
 		jsc.uint16,
 		jsc.uint16,
 		(a, b) => padInt(a, b).length === b
 	);
 
 	jsc.property(
-		"padInt(a, +b) should always be equal to b",
-		jsc.uint16,
-		jsc.uint16,
-		(a, b) => padInt(a, b).length === b
-	);
-
-	jsc.property("padInt(a, -b) should throw", jsc.uint16, jsc.uint16, (a, b) =>
-		jsc.throws(() => padInt(a, -b - 1))
-	);
-
-	jsc.property(
-		"padInt return value, when parsed, should be eual to its input",
+		"The returned string, when parsed, should be eual to its input",
 		jsc.int16,
 		jsc.uint16,
 		(a, b) => parseInt(padInt(a, b)) === a
