@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 /**
  * A stateless seeker component
- * Set percent to set seekers position
+ * Set percent to set seeker's position
  * On user click, onSeekClick is called with the corresponding percentage as 
  * argument
  * */
