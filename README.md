@@ -10,7 +10,7 @@ You can change the layout in [src/styles/Layout.css](src/styles/Layout.css) if y
 All components, except Player, are stateless functional presentational components.
 
 ### [Player](src/components/Player.js)
-Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods).
+Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods). It's props are passed to MediaController and Seeker.
 
 #### Props:
 * tracks: A list of well-shaped [tracks](src/playlist.js)
