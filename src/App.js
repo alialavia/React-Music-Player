@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 import styled from "styled-components";
-import Player from './components/Player.js';
+import Player from "./components/Player.js";
 import tracks from "./playlist.js";
 class App extends Component {
   render() {
