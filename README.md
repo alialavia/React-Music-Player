@@ -3,8 +3,8 @@
 This is a simple music player UI for [react-player](https://www.npmjs.com/package/react-player).
 
 ## Styling
-Colors, font size, etc can be changed in [src/styles/Player.css](src/styles/Player.css).
-You can change the layout in [src/styles/Layout.css](src/styles/Layout.css) if you know what you're doing.
+Colors, font size, etc can be changed in [src/style/Player.css](src/style/Player.css).
+You can change the layout in [src/style/Layout.css](src/style/Layout.css) if you know what you're doing.
 
 ## Components
 All components, except Player, are stateless functional presentational components.
