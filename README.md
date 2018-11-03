@@ -10,13 +10,13 @@ You can change the layout in [src/styles/Layout.css](src/styles/Layout.css) if y
 All components, except Player, are stateless functional presentational components.
 
 ### [Player](src/components/Player.js)
-Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods). It's props are passed to MediaController and Seeker.
+Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods). 
 
 #### Props:
 * tracks: A list of well-shaped [tracks](src/playlist.js)
 
 ### [MediaController](src/components/MediaController.js)
-MediaController is a stateless functional presentational component. It present a UI for user inputs (via MediaButtons and Seeker), and shows artwork, artist name, and current time. It needs to be connected to the ReactPlayer.
+MediaController is a stateless functional presentational component. It present a UI for user inputs (via MediaButtons and Seeker), and shows artwork, artist name, and current time. It needs to be connected to the ReactPlayer. 
 
 ### [MediaButtons](src/components/MediaButtons.js)
 MediaButtons is a stateless functional presentational component. The events and props should be handled by a stateful parent (e.g. to show play vs. pause, enable fast forward button, ...):
