@@ -82,7 +82,7 @@ class Player extends React.Component {
           height={0}
           width={0}
           config={{ file: { forceAudio: true } }}
-          progressInterval={1000}          
+          progressInterval={10}          
         />
       </React.Fragment>
     );
