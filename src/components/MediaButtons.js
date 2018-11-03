@@ -3,7 +3,7 @@ import React from "react";
 import classNames from "classnames";
 /**
  * Stateless UI for media player buttons
- * It's up to the parent to handler user's interaction 
+ * It's up to the parent to handle user interactions
  */
 
 export default function MediaButtons({
