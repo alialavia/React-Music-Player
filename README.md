@@ -9,19 +9,19 @@ You can change the layout in [src/styles/Layout.css](src/styles/Layout.css) if y
 ## Components
 All components, except Player, are stateless functional presentational components.
 
-###[Player](src/components/Player.js)
+### [Player](src/components/Player.js)
 Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods).
 
-####Props:
+#### Props:
 * tracks: A list of well-shaped [tracks](src/playlist.js)
 
-###[MediaController](src/components/MediaController.js)
+### [MediaController](src/components/MediaController.js)
 MediaController is a stateless functional presentational component. It present a UI for user inputs (via MediaButtons and Seeker), and shows artwork, artist name, and current time. It needs to be connected to the ReactPlayer.
 
-###[MediaButtons](src/components/MediaButtons.js)
+### [MediaButtons](src/components/MediaButtons.js)
 MediaButtons is a stateless functional presentational component. The events and props should be handled by a stateful parent (e.g. to show play vs. pause, enable fast forward button, ...):
 
-####Props:
+#### Props:
 * isNextEnabled: Enable or disable NEXT button
 * isPlaying: If true, the middle button will show PAUSE icon, otherwise it show PLAY icon
 * isPrevEnabled: Enable or disable PREV button
@@ -29,10 +29,10 @@ MediaButtons is a stateless functional presentational component. The events and 
 * onPlayClick: Dispatched if PLAY/PAUSE button clicked
 * onPrevClick: Dispatched if PREV button clicked
 
-###[Seeker](src/components/Seeker.js)
+### [Seeker](src/components/Seeker.js)
 Seeker is a stateless functional presentational component. It shows a progress bar that responds to the `percent` prop, and dispatches a onSeekClick event with the corresponding percentage value of the position user clicked on.
 
-####Props:
+#### Props:
 * percent: A number, between 0.0 and 1.0. The component will show a progress bar corresponding to this number.
 * onSeekClick: Dispatched when user clicks on the control. Dispatched with the corresponding percent value as argument.
 
