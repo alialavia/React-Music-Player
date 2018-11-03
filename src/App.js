@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Player from './components/Player.js';
 import './App.css';
 import styled from "styled-components";
-
+import Player from './components/Player.js';
+import tracks from "./playlist.js";
 class App extends Component {
   render() {
     return (
       <FullHeight>
-        <Player style={{flex: 1}}/>
+        <Player tracks={tracks} style={{ flex: 1 }}/>
       </FullHeight>
     );
   }

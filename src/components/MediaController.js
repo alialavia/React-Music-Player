@@ -4,7 +4,7 @@ import classNames from "classnames";
 import styled from "styled-components";
 import Seeker from "./Seeker.js";
 import MediaButtons from "./MediaButtons.js";
-import { formatSeconds } from "../Helpers.js";
+import { formatSeconds, trackPropType } from "../Helpers.js";
 
 /**
  * Stateless UI for interacting with a track.
@@ -81,14 +81,7 @@ export default function MediaController({
 }
 
 MediaController.propTypes = {
-	track: PropTypes.shape({
-		id: PropTypes.number.isRequired,
-		trackName: PropTypes.string.isRequired,
-		mediaUrl: PropTypes.string.isRequired,
-		artistName: PropTypes.string.isRequired,
-		durationMilliseconds: PropTypes.number.isRequired,
-		artworkUrl: PropTypes.string
-	}),
+	track: trackPropType,
 	isNextEnabled: PropTypes.bool.isRequired,
 	isPrevEnabled: PropTypes.bool.isRequired,
 	onNextClick: PropTypes.func.isRequired,

@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ReactPlayer from "react-player";
-import { tracks } from "../playlist.js";
 import MediaController from "./MediaController.js";
+import { trackPropType } from "../Helpers.js";
 import "../style/Layout.css";
 import "../style/Player.css";
 
@@ -15,7 +16,6 @@ class Player extends React.Component {
       playedSeconds: 0,
       playedPercent: 0
     };
-    this.tracks = tracks;
   }
 
   prevHandler = () => {
@@ -27,7 +27,7 @@ class Player extends React.Component {
   nextHandler = () => {
     this.setState(prevState => {
       return {
-        trackIndex: Math.min(prevState.trackIndex + 1, this.tracks.length - 1)
+        trackIndex: Math.min(prevState.trackIndex + 1, this.props.tracks.length - 1)
       };
     });
   };
@@ -62,7 +62,7 @@ class Player extends React.Component {
     return (
       <React.Fragment>
         <MediaController
-          isNextEnabled={this.state.trackIndex < this.tracks.length - 1}
+          isNextEnabled={this.state.trackIndex < this.props.tracks.length - 1}
           isPlaying={this.state.playing}
           isPrevEnabled={this.state.trackIndex > 0}
           onNextClick={this.nextHandler}
@@ -70,12 +70,12 @@ class Player extends React.Component {
           onPrevClick={this.prevHandler}
           onSeekClick={this.seekHandler}
           playedPercent={this.state.playedPercent}
-          track={this.tracks[this.state.trackIndex]}
+          track={this.props.tracks[this.state.trackIndex]}
         />
         <ReactPlayer          
           ref={this.readyHandler}
           playing={this.state.playing}
-          url={this.tracks[this.state.trackIndex].mediaUrl}
+          url={this.props.tracks[this.state.trackIndex].mediaUrl}
           onProgress={this.progressHandler}
           onEnded={this.endedHandler}
           volume={0.1}
@@ -88,5 +88,7 @@ class Player extends React.Component {
     );
   }
 }
-
+Player.propTypes = {
+  tracks : PropTypes.arrayOf(trackPropType).isRequired
+}
 export default Player;
