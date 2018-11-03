@@ -13,7 +13,7 @@ All components, except Player, are stateless functional presentational component
 Player is a stateful container for [MediaContoller](src/components/MediaController.js) and ReactPlayer. It handles user events dispatched from the MediaController, and media events dispatched from the ReactPlayer. It also manages seek requests by the user via its [canonical ref approach](https://www.npmjs.com/package/react-player#instance-methods). 
 
 #### Props:
-* tracks: A list of well-shaped [tracks](src/playlist.js)
+* tracks: A list of well-shaped, valid [tracks](src/playlist.js). The component don't sanitize the input, and it's behavior is undefined if e.g. a negative `durationMilliseconds`, or a non-string `mediaUrl` is provided.
 
 ### [MediaController](src/components/MediaController.js)
 MediaController is a stateless functional presentational component. It present a UI for user inputs (via MediaButtons and Seeker), and shows artwork, artist name, and current time. It needs to be connected to the ReactPlayer. 
