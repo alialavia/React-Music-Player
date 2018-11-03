@@ -10,9 +10,7 @@ html, body {
   bottom: 0px;
   width: 100%;
 }
-body {
-  background-color: #444444;
-}
+
 .App {
   text-align: center;
   height: 100%;

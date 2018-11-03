@@ -3,7 +3,7 @@ module.exports = {
     {
       id: 1,
       trackName: "The Pretender",
-      artistName: "Foo Fighters sldkfj ;asldkjf a;slkdjf;alsdkjf;lskjdalsdkjfalsdkjfalsdkjfalsdkjfalsdkjf",
+      artistName: "Foo Fighters",
       artworkUrl:
         "https://images.sk-static.com/images/media/profile_images/artists/29315/huge_avatar",
       mediaUrl:
