@@ -1,9 +1,10 @@
 import React from "react";
+import ReactPlayer from "react-player";
 import { tracks } from "../playlist.js";
 import MediaController from "./MediaController.js";
 import "../style/Layout.css";
 import "../style/Player.css";
-import ReactPlayer from "react-player";
+
 
 class Player extends React.Component {
   constructor(props) {
@@ -61,27 +62,27 @@ class Player extends React.Component {
     return (
       <React.Fragment>
         <MediaController
+          isNextEnabled={this.state.trackIndex < this.tracks.length - 1}
           isPlaying={this.state.playing}
-          playedPercent={this.state.playedPercent}
-          track={this.tracks[this.state.trackIndex]}
-          onPrevClick={this.prevHandler}
+          isPrevEnabled={this.state.trackIndex > 0}
           onNextClick={this.nextHandler}
           onPlayClick={this.playHandler}
-          onSeek={this.seekHandler}
-          isPrevEnabled={this.state.trackIndex > 0}
-          isNextEnabled={this.state.trackIndex < this.tracks.length - 1}
+          onPrevClick={this.prevHandler}
+          onSeekClick={this.seekHandler}
+          playedPercent={this.state.playedPercent}
+          track={this.tracks[this.state.trackIndex]}
         />
-        <ReactPlayer
-          volume={0.1}
+        <ReactPlayer          
           ref={this.readyHandler}
           playing={this.state.playing}
           url={this.tracks[this.state.trackIndex].mediaUrl}
+          onProgress={this.progressHandler}
+          onEnded={this.endedHandler}
+          volume={0.1}
           height={0}
           width={0}
           config={{ file: { forceAudio: true } }}
-          progressInterval={1000}
-          onProgress={this.progressHandler}
-          onEnded={this.endedHandler}
+          progressInterval={1000}          
         />
       </React.Fragment>
     );

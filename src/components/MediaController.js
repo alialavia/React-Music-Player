@@ -14,15 +14,15 @@ import { formatSeconds } from "../Helpers.js";
  */
 
 export default function MediaController({
-	track,
-	playedPercent,
+	isNextEnabled,
 	isPlaying,
 	isPrevEnabled,
-	isNextEnabled,
-	onPrevClick,
 	onNextClick,
 	onPlayClick,
-	onSeek,
+	onPrevClick,
+	onSeekClick,
+	playedPercent,
+	track,
 	...passThrough
 }) {
 	return (
@@ -72,7 +72,7 @@ export default function MediaController({
 				</div>
 				<Seeker
 					className={classNames("control-panel", "seeker")}
-					onSeek={onSeek}
+					onSeekClick={onSeekClick}
 					percent={playedPercent * 100}
 				/>
 			</div>
@@ -93,7 +93,7 @@ MediaController.propTypes = {
 	isPrevEnabled: PropTypes.bool.isRequired,
 	onNextClick: PropTypes.func.isRequired,
 	onPrevClick: PropTypes.func.isRequired,
-	onSeek: PropTypes.func.isRequired
+	onSeekClick: PropTypes.func.isRequired
 };
 
 /* Simple components used in the Media Player */

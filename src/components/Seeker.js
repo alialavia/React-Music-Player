@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import React from "react";
 /**
  * A stateless seeker component
- * Set percent to see seekers position
- * On user click, onSeek is called with the corresponding percentage
+ * Set percent to set seekers position
+ * On user click, onSeekClick is called with the corresponding percentage as 
+ * argument
  * */
-function Seeker({ percent, onSeek, ...passThrough }) {
+function Seeker({ percent, onSeekClick, ...passThrough }) {
     return (
         <div
             className="hv-center"
@@ -18,7 +19,7 @@ function Seeker({ percent, onSeek, ...passThrough }) {
                 onClick={event => {
                     let bounds = event.currentTarget.getBoundingClientRect();
                     let x = event.clientX - bounds.left;
-                    onSeek(x / bounds.width);
+                    onSeekClick(x / bounds.width);
                 }}
                 className="seeker-background"
                 style={{
@@ -41,7 +42,7 @@ function Seeker({ percent, onSeek, ...passThrough }) {
 
 Seeker.propTypes = {
     percent: PropTypes.number,
-    onSeek: PropTypes.func
+    onSeekClick: PropTypes.func
 };
 
 export default Seeker;

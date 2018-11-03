@@ -7,12 +7,12 @@ import classNames from "classnames";
  */
 
 export default function MediaButtons({
+	isNextEnabled,
 	isPlaying,
 	isPrevEnabled,
-	onPrevClick,
-	isNextEnabled,
 	onNextClick,
 	onPlayClick,
+	onPrevClick,
 	...passThrough
 }) {
 	return (
@@ -39,11 +39,11 @@ export default function MediaButtons({
 }
 
 MediaButtons.propTypes = {
-	isPlaying: PropTypes.bool.isRequired,
-	onPlayClick: PropTypes.func.isRequired,
 	isNextEnabled: PropTypes.bool.isRequired,
+	isPlaying: PropTypes.bool.isRequired,
 	isPrevEnabled: PropTypes.bool.isRequired,
 	onNextClick: PropTypes.func.isRequired,
+	onPlayClick: PropTypes.func.isRequired,
 	onPrevClick: PropTypes.func.isRequired
 };
 
