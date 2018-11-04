@@ -27,6 +27,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "fast-check": "^1.7.1",
     "jsverify": "^0.8.4"
   }
 }

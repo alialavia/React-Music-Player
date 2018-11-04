@@ -45,7 +45,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * [react-player](https://www.npmjs.com/package/react-player): For playing media
 
 ## Dev dependencies
-* [jsverify](https://github.com/jsverify/jsverify): For painless property-based testing (see [Helpers.test.js](src/Helpers.test.js))
+* [fast-check](https://github.com/dubzzz/fast-check): For painless property-based testing (see [Helpers.test.js](src/Helpers.test.js))
+  * It provides better compatibility with Jest than jsverify.
 
 ## TODO
 Writing tests for components

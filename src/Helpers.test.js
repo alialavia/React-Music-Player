@@ -1,5 +1,16 @@
-import * as jsc from "jsverify";
+import * as fc from "fast-check";
 import { padInt, formatSeconds } from "./Helpers.js";
+
+/* Helpers for test functions. MAX_SIZE forces a limit on test cases for faster testing.*/
+const MAX_SIZE = 1e4;
+let NEG_INT = fc.nat(MAX_SIZE).map(i => -i - 1);
+let POS_INT = fc.nat(MAX_SIZE);
+
+function testProperty(name, ...args) {
+	return test(name, () => {
+		fc.assert(fc.property(...args));
+	});
+}
 
 function numOfDigits(n) {
 	if (n == 0) return 1;
@@ -7,66 +18,77 @@ function numOfDigits(n) {
 	return Math.floor(Math.log10(n)) + 1;
 }
 
-describe("padInt test suite.", function() {
-	jsc.property(
-		"Padding cannot be negative and should throw exception",
-		jsc.uint16,
-		jsc.uint16,
-		(a, b) => jsc.throws(() => padInt(a, -b - 1))
+describe("numOfDigits test suite", () => {
+	testProperty(
+		"For positive numbers, should be equal to their string representation length",
+		POS_INT,
+		a => expect(numOfDigits(a)).toBe(a.toString().length)
 	);
 
-	jsc.property(
-		"For negative numbers, the result's length should be 1 more than the padding, to account for the negative sign",
-		jsc.uint16,
-		jsc.uint16,
-		(a, b) =>
-			padInt(-a - 1, b).length ===
-			(numOfDigits(-a - 1) > b ? numOfDigits(-a - 1) + 1 : b + 1)
-	);
-
-	jsc.property(
-		"For positive numbers, the result's length should be eqaul to the padding",
-		jsc.uint16,
-		jsc.uint16,
-		(a, b) =>
-			padInt(a, b).length === (numOfDigits(a) > b ? numOfDigits(a) : b)
-	);
-
-	jsc.property(
-		"The returned string, when parsed, should be eual to its input",
-		jsc.int16,
-		jsc.uint16,
-		(a, b) => parseInt(padInt(a, b)) === a
+	testProperty(
+		"For negative numbers, should be equal to their string representation length - 1",
+		NEG_INT,
+		a => expect(numOfDigits(a)).toBe(a.toString().length - 1)
 	);
 });
 
-describe("formatSeconds test suite.", function() {
-	jsc.property(
-		"length should always >= 5",
-		jsc.uint16,
-		a => formatSeconds(a).length >= 5
+describe("padInt test suite", function() {
+	testProperty(
+		"Padding cannot be negative and should throw exception",
+		POS_INT,
+		NEG_INT,
+		(a, b) => expect(() => padInt(a, b)).toThrow()
 	);
 
-	jsc.property(
-		"seconds length === 2",
-		jsc.uint16,
-		a => formatSeconds(a).split(":")[1].length === 2
+	testProperty(
+		"For negative numbers, the result's length should be 1 more than the padding, to account for the negative sign",
+		NEG_INT,
+		POS_INT,
+		(a, b) =>
+			expect(padInt(a, b).length).toBe(
+				numOfDigits(a) > b ? numOfDigits(a) + 1 : b + 1
+			)
 	);
 
-	jsc.property(
-		"minutes length >= 2",
-		jsc.uint16,
-		a => formatSeconds(a).split(":")[0].length >= 2
+	testProperty(
+		"For positive numbers, the result's length should be eqaul to the padding",
+		POS_INT,
+		POS_INT,
+		(a, b) =>
+			expect(padInt(a, b).length).toBe(
+				numOfDigits(a) > b ? numOfDigits(a) : b
+			)
 	);
 
-	jsc.property(
+	testProperty(
+		"The returned string, when parsed, should be eual to its input",
+		POS_INT,
+		POS_INT,
+		(a, b) => expect(parseInt(padInt(a, b))).toBe(a)
+	);
+});
+
+describe("formatSeconds test suite", function() {
+	testProperty("length should always >= 5", POS_INT, a =>
+		expect(formatSeconds(a).length).toBeGreaterThanOrEqual(5)
+	);
+
+	testProperty("seconds length === 2", POS_INT, a =>
+		expect(formatSeconds(a).split(":")[1].length).toBe(2)
+	);
+
+	testProperty("minutes length >= 2", POS_INT, a =>
+		expect(formatSeconds(a).split(":")[0].length).toBeGreaterThanOrEqual(2)
+	);
+
+	testProperty(
 		"converting back to seconds should return the same result",
-		jsc.uint16,
+		POS_INT,
 		a => {
 			let x = formatSeconds(a)
 				.split(":")
 				.map(e => parseInt(e));
-			return a === x[0] * 60 + x[1];
+			expect(a).toBe(x[0] * 60 + x[1]);
 		}
 	);
 });
